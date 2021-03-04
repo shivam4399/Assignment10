@@ -1,3 +1,7 @@
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,7 +12,7 @@ import java.util.Scanner;
 
 public class ContactService {
 	ArrayList<Contact> contactList= new ArrayList<Contact>();
-	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+	public static void main(String[] args) throws ClassNotFoundException, SQLException, IOException {
 		// TODO Auto-generated method stub
 		Connection con = CreateConnection.connect();
 		Statement smt = con.createStatement();
@@ -48,6 +52,9 @@ public class ContactService {
 				continue;
 			case 8:
 				cs.sortByName();
+				continue;
+			case 9:
+				cs.serializeContact();
 				
 				
 				
@@ -58,6 +65,14 @@ public class ContactService {
 		}
 		
 		
+	}
+	
+	void serializeContact() throws IOException {
+		FileOutputStream fos = new FileOutputStream("contactList.ser");
+		ObjectOutputStream oos=new ObjectOutputStream(fos);
+		for(Contact c: contactList) {
+			oos.writeObject(c);
+		}
 	}
 	private void sortByName() {
 		contactList.sort(new sortContactByName());
