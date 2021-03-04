@@ -1,6 +1,9 @@
+import java.io.EOFException;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -55,12 +58,31 @@ public class ContactService {
 				continue;
 			case 9:
 				cs.serializeContact();
+				continue;
+			case 10:
+				cs.deserializeContact();
 				
 				
 				
 				
 				
 			}
+			
+		}
+		
+		
+	}
+	void deserializeContact() throws  ClassNotFoundException,IOException {
+		FileInputStream fis=null;
+		ObjectInputStream ois=null;
+		try {
+			fis = new FileInputStream("contactList.ser");
+			ois = new ObjectInputStream(fis);
+			while(true)
+				contactList.add((Contact) ois.readObject());
+			
+		}
+		catch (EOFException eof) {
 			
 		}
 		
