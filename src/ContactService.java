@@ -72,6 +72,8 @@ public class ContactService {
 		
 		
 	}
+	
+	//method to deserialize the objects i.e read from the file contactList.er
 	void deserializeContact() throws  ClassNotFoundException,IOException {
 		FileInputStream fis=null;
 		ObjectInputStream ois=null;
@@ -89,6 +91,7 @@ public class ContactService {
 		
 	}
 	
+	//method to serialize the objects i.e store to the file contactList.er
 	void serializeContact() throws IOException {
 		FileOutputStream fos = new FileOutputStream("contactList.ser");
 		ObjectOutputStream oos=new ObjectOutputStream(fos);
@@ -96,10 +99,14 @@ public class ContactService {
 			oos.writeObject(c);
 		}
 	}
+	
+	//method to sort the Contacts with name
 	private void sortByName() {
 		contactList.sort(new sortContactByName());
 		System.out.println("Contact List has been sorted by Contact Name");
 	}
+	
+	//method to add contact number in the database
 	private void addContactNumber() {
 		System.out.println("Enter the Contact id of contact");
 		Scanner sc = new Scanner(System.in);
@@ -125,6 +132,8 @@ public class ContactService {
 		
 		
 	}
+	
+	//method to search the contact with number
 	void searchByNumber() throws ClassNotFoundException, SQLException {
 		System.out.println("Enter the Number of contact");
 		Scanner sc = new Scanner(System.in);
@@ -157,6 +166,8 @@ public class ContactService {
 		}
 		
 	}
+	
+	//method to search contact by name
 	void SearchContactByName() throws ClassNotFoundException, SQLException {
 		System.out.println("Enter the name of contact");
 		Scanner sc = new Scanner(System.in);
@@ -183,6 +194,8 @@ public class ContactService {
 			}
 		
 	}
+	
+	//method to delete the movie from the database
 	void removeContact() throws ClassNotFoundException, SQLException {
 		System.out.println("Enter the ID of contact to remove");
 		Scanner sc = new Scanner(System.in);
@@ -202,11 +215,15 @@ public class ContactService {
 				e.printStackTrace();
 			}
 	}
+	
+	//method to display the Contact details
 	void displayContact() {
 		for(Contact c:contactList) {
 			System.out.println("ID : "+c.getId()+" NAME : "+c.getName()+" EMAIL : "+c.getEmail()+" NUMBER : "+c.getContact());
 		}
 	}
+	
+	//method to populate contact list from the database
 	void populateContactFromDb() throws ClassNotFoundException, SQLException{
 		ArrayList<Contact> al= new ArrayList<Contact>();
 		Connection con = CreateConnection.connect();
@@ -235,6 +252,8 @@ public class ContactService {
 		}
 		contactList.addAll(al);
 	}
+	
+	//method to get the Maximum ID of Contact
 	int getMaxContactId() throws ClassNotFoundException, SQLException {
 		Connection con = CreateConnection.connect();
 		//step3 create the statement object  
@@ -250,6 +269,8 @@ public class ContactService {
 			
 			
 	}
+	
+	//method to get the details from user and store into the database
 	void getContactDetails() throws ClassNotFoundException, SQLException {
 		Connection con = CreateConnection.connect();
 		ArrayList<Contact> al=new ArrayList<Contact>();
@@ -290,6 +311,8 @@ public class ContactService {
 		addContact(c,al);
 		
 	}
+	
+	//Add contact to the DB
 	void addContact(Contact contact,List<Contact> contacts) {
 		contactList.addAll(contacts);
 		
